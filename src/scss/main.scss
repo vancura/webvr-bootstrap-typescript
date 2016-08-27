@@ -1,0 +1,59 @@
+@import '../../components/normalize-scss/normalize.scss';
+@import '../../components/normalize-opentype.css/normalize-opentype.scss';
+@import '../../components/colors/sass/variables';
+
+
+* {
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0;
+    overflow: hidden;
+    position: fixed;
+}
+
+
+body {
+    font: 12px/1em -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: black;
+    color: white;
+}
+
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+canvas {
+    position: absolute;
+    top: 0;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+
+#buttons {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1;
+    color: #eee;
+
+    button {
+        border: 1px #eee solid;
+        background: transparent;
+        padding: 0.5em 0.75em;
+        margin: 0;
+    }
+}

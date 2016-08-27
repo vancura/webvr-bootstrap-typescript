@@ -1,0 +1,28 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Launch as file",
+            "type": "chrome",
+            "request": "launch",
+            "file": "index.html"
+        },
+        {
+            "name": "Launch with sourcemaps",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://127.0.0.1:8000/",
+            "webRoot": "./",
+            "sourceMaps": true,
+            "runtimeExecutable": "/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary"
+        },
+        {
+            "name": "Attach to Chrome",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9223,
+            "webRoot": "./",
+            "sourceMaps": true
+        }
+    ]
+}

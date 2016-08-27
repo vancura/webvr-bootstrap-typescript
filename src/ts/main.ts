@@ -1,0 +1,1 @@
+App.getInstance().init();
