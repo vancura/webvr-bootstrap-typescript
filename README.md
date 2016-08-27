@@ -2,6 +2,8 @@
 
 This is a simple WebVR/Three.js bootstrap on top of webvr-polyfill in TypeScript, with BrowserSync, powered by Gulp.
 
+You can see the live example at http://codepen.io/vancura/pen/AXZRoL?editors=111.
+
 Some other features:
 
 * normalize-css
