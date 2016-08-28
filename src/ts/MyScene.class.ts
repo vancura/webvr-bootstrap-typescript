@@ -1,6 +1,7 @@
 ///<reference path="./ColladaLoader.d.ts"/>
 
 
+import Object3D = THREE.Object3D;
 class MyScene extends THREE.Scene {
 
 
@@ -65,7 +66,7 @@ class MyScene extends THREE.Scene {
 
         // Lights
         this.add(new THREE.AmbientLight(0xcccccc));
-        var directionalLight:THREE.DirectionalLight = new THREE.DirectionalLight(0xeeeeee);
+        var directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xeeeeee);
         directionalLight.position.x = Math.random() - 0.5;
         directionalLight.position.y = Math.random();
         directionalLight.position.z = Math.random() - 0.5;
@@ -78,16 +79,10 @@ class MyScene extends THREE.Scene {
      * Create model.
      */
     private createModel(): void {
-        // var loader: THREE.ColladaLoader = new THREE.ColladaLoader();
-        var loader: THREE.AssimpJSONLoader = new THREE.AssimpJSONLoader();
+        var loader: THREE.ColladaLoader = new THREE.ColladaLoader();
 
-        loader.load("assets/deer.json", this.onLoaded, this.onProgress, this.onError);
+        loader.load("assets/deer.dae", this.onLoaded, this.onProgress);
     }
-
-
-    private onError = (xhr: any): void => {
-        console.error("ERROR");
-    };
 
 
     private onProgress = (xhr: any): void => {
@@ -99,9 +94,15 @@ class MyScene extends THREE.Scene {
 
 
     private onLoaded = (object: THREE.Object3D): void => {
-        object.scale.multiplyScalar(0.1);
-        console.log(object);
-        this.add(object);
+        // object.scale.multiplyScalar(0.1);
+
+        var x: any = this.add(object.scene);
+        var y: THREE.Texture = x.children[2].children[0].children[0].material.map;
+
+        y.magFilter = THREE.NearestFilter;
+        y.minFilter = THREE.NearestFilter;
+
+        console.log(y);
     };
 
 
