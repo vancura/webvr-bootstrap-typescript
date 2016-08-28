@@ -17,6 +17,7 @@
     "files": [
         "src/ts/data/Enums.class.ts",
         "src/ts/data/Settings.class.ts",
+        "src/ts/MyScene.class.ts",
         "src/ts/App.class.ts",
         "src/ts/main.ts",
         "typings/globals/three/index.d.ts",
