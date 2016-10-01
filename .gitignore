@@ -1,5 +1,6 @@
 /components
 /node_modules
 /dist
+/.idea
 
 *.pkf
