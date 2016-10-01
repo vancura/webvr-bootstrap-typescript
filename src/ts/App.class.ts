@@ -34,8 +34,6 @@ class App {
      * Initialization.
      */
     init(): void {
-        console.log("TypeScript WebVR Bootstrap version %VERSION%");
-
         // Setup three.js WebGL renderer. Note: Antialiasing is a big performance hit
         // Only enable it if you actually need to
         this.renderer = new THREE.WebGLRenderer({ antialias: false });
@@ -100,7 +98,8 @@ class App {
      * @param timestamp Timestamp
      */
     private animate = (timestamp: number): void => {
-        var delta: number = Math.min(timestamp - this.lastRender, 500);
+        let delta: number = Math.min(timestamp - this.lastRender, 500);
+
         this.lastRender = timestamp;
 
         // Animate the scene

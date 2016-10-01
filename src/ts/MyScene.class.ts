@@ -1,7 +1,6 @@
 ///<reference path="./ColladaLoader.d.ts"/>
 
 
-import Object3D = THREE.Object3D;
 class MyScene extends THREE.Scene {
 
 
@@ -14,14 +13,14 @@ class MyScene extends THREE.Scene {
     constructor() {
         super();
 
-        var boxSize: number = 20;
-        var loader: THREE.TextureLoader = new THREE.TextureLoader();
+        let boxSize: number = 20;
+        let loader: THREE.TextureLoader = new THREE.TextureLoader();
 
         // Create the skybox
         loader.load("assets/box.png", (texture) => {
-            var geometry: THREE.BoxGeometry;
-            var material: THREE.MeshBasicMaterial;
-            var skybox: THREE.Mesh;
+            let geometry: THREE.BoxGeometry;
+            let material: THREE.MeshBasicMaterial;
+            let skybox: THREE.Mesh;
 
             texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.RepeatWrapping;
@@ -56,8 +55,8 @@ class MyScene extends THREE.Scene {
      * Create the world.
      */
     private createWorld(): void {
-        var geometry: THREE.BoxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-        var material: THREE.MeshNormalMaterial = new THREE.MeshNormalMaterial();
+        let geometry: THREE.BoxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+        let material: THREE.MeshNormalMaterial = new THREE.MeshNormalMaterial();
 
         this.cube = new THREE.Mesh(geometry, material);
         this.cube.position.z = -1;
@@ -66,7 +65,7 @@ class MyScene extends THREE.Scene {
 
         // Lights
         this.add(new THREE.AmbientLight(0xcccccc));
-        var directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xeeeeee);
+        let directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xeeeeee);
         directionalLight.position.x = Math.random() - 0.5;
         directionalLight.position.y = Math.random();
         directionalLight.position.z = Math.random() - 0.5;
@@ -79,30 +78,25 @@ class MyScene extends THREE.Scene {
      * Create model.
      */
     private createModel(): void {
-        var loader: THREE.ColladaLoader = new THREE.ColladaLoader();
+        let loader: THREE.ColladaLoader = new THREE.ColladaLoader();
 
-        loader.load("assets/deer.dae", this.onLoaded, this.onProgress);
+        loader.load("assets/deer.dae", (object: any) => {
+            // object.scale.multiplyScalar(0.1);
+
+            let x: any = this.add(object.scene);
+            let y: THREE.Texture = x.children[2].children[0].children[0].material.map;
+
+            y.magFilter = THREE.NearestFilter;
+            y.minFilter = THREE.NearestFilter;
+        }, this.onProgress);
     }
 
 
     private onProgress = (xhr: any): void => {
         if (xhr.lengthComputable) {
-            var percentComplete: number = xhr.loaded / xhr.total * 100;
+            let percentComplete: number = xhr.loaded / xhr.total * 100;
             console.log(percentComplete + "% downloaded");
         }
-    };
-
-
-    private onLoaded = (object: THREE.Object3D): void => {
-        // object.scale.multiplyScalar(0.1);
-
-        var x: any = this.add(object.scene);
-        var y: THREE.Texture = x.children[2].children[0].children[0].material.map;
-
-        y.magFilter = THREE.NearestFilter;
-        y.minFilter = THREE.NearestFilter;
-
-        console.log(y);
     };
 
 
