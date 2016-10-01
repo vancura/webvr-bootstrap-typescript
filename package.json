@@ -20,7 +20,6 @@
         "gulp-rename": "^1.2.2",
         "gulp-sass": "^2.3.2",
         "gulp-sourcemaps": "^1.6.0",
-        "gulp-tslint": "^6.1.1",
         "gulp-typescript": "^2.13.6",
         "run-sequence": "^1.2.2",
         "vinyl-paths": "^2.1.0"

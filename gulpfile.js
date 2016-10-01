@@ -12,7 +12,7 @@ var runSequence = require("run-sequence");
 var sass = require("gulp-sass");
 var sourcemaps = require("gulp-sourcemaps");
 var ts = require("gulp-typescript");
-var tslint = require("gulp-tslint");
+// var tslint = require("gulp-tslint"); // FIXME: Removed until gulp-tslint fixes all the TypeScript2 issues
 // var uglify = require("gulp-uglify-harmony"); // FIXME: Removed until gulp-uglifyjs supports harmony
 var vinylPaths = require("vinyl-paths");
 
@@ -58,6 +58,7 @@ gulp.task("styles", function() {
 });
 
 
+/*
 gulp.task("tslint", function() {
     "use strict";
 
@@ -67,6 +68,7 @@ gulp.task("tslint", function() {
                }))
                .pipe(tslint.report());
 });
+*/
 
 
 gulp.task("scripts-debug", function() {
@@ -141,5 +143,5 @@ gulp.task("clean", function() {
 gulp.task("default", function(callback) {
     "use strict";
 
-    runSequence("clean", "tslint", ["styles", "scripts-dist"], callback);
+    runSequence("clean", /*"tslint",*/ ["styles", "scripts-dist"], callback);
 });
