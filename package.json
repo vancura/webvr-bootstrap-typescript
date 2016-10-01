@@ -9,12 +9,12 @@
         "url": "https://github.com/vancura/webvr-bootstrap-typescript"
     },
     "devDependencies": {
-        "browser-sync": "^2.14.0",
         "del": "^2.2.2",
         "gulp": "^3.9.1",
         "gulp-autoprefixer": "^3.1.1",
         "gulp-clean-css": "^2.0.12",
         "gulp-concat": "^2.6.0",
+        "gulp-connect": "^5.0.0",
         "gulp-filelog": "^0.4.1",
         "gulp-frep": "^0.1.3",
         "gulp-rename": "^1.2.2",

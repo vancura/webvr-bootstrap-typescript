@@ -1,5 +1,4 @@
 var autoprefixer = require("gulp-autoprefixer");
-var browserSync = require("browser-sync");
 var concat = require("gulp-concat");
 var del = require("del");
 var filelog = require("gulp-filelog");
@@ -15,6 +14,7 @@ var ts = require("gulp-typescript");
 // var tslint = require("gulp-tslint"); // FIXME: Removed until gulp-tslint fixes all the TypeScript2 issues
 // var uglify = require("gulp-uglify-harmony"); // FIXME: Removed until gulp-uglifyjs supports harmony
 var vinylPaths = require("vinyl-paths");
+var connect = require("gulp-connect");
 
 
 var proxy = "http://localhost:8000";
@@ -34,7 +34,9 @@ var paths = {
     ]
 };
 
-var tsProject = ts.createProject("tsconfig.json", {typescript: require("typescript")});
+var tsProject = ts.createProject("tsconfig.json", {
+    typescript: require("typescript")
+});
 
 
 gulp.task("styles", function() {
@@ -42,19 +44,17 @@ gulp.task("styles", function() {
 
     // Compile SCSS.
     return gulp.src(paths.srcSCSS)
-               .pipe(sass({
-                   errLogToConsole: false,
-                   outputStyle: "expanded"
-               }).on("error", sass.logError))
-               .pipe(autoprefixer("last 2 versions", "safari 6", "ie 10", "opera 12.1", "ios 6", "android 4", "blackberry 10"))
-               .pipe(rename({
-                   suffix: ".min"
-               }))
-               .pipe(cleancss())
-               .pipe(gulp.dest(paths.distCSS))
-               .pipe(browserSync.reload({
-                   stream: true
-               }));
+        .pipe(sass({
+            errLogToConsole: false,
+            outputStyle: "expanded"
+        }).on("error", sass.logError))
+        .pipe(autoprefixer("last 2 versions", "safari 6", "ie 10", "opera 12.1", "ios 6", "android 4", "blackberry 10"))
+        .pipe(rename({
+            suffix: ".min"
+        }))
+        .pipe(cleancss())
+        .pipe(gulp.dest(paths.distCSS))
+        .pipe(connect.reload());
 });
 
 
@@ -63,10 +63,10 @@ gulp.task("tslint", function() {
     "use strict";
 
     return gulp.src(paths.srcTS)
-               .pipe(tslint({
-                   formatter: "verbose"
-               }))
-               .pipe(tslint.report());
+        .pipe(tslint({
+            formatter: "verbose"
+        }))
+        .pipe(tslint.report());
 });
 */
 
@@ -80,19 +80,17 @@ gulp.task("scripts-debug", function() {
     }];
 
     var tsResult = tsProject.src()
-                            .pipe(sourcemaps.init())
-                            .pipe(ts(tsProject));
+        .pipe(sourcemaps.init())
+        .pipe(ts(tsProject));
 
     return tsResult.js
-                   .pipe(sourcemaps.write(".", {
-                       sourceRoot: srcRoot,
-                       includeContent: false
-                   }))
-                   .pipe(frep(patterns))
-                   .pipe(gulp.dest("."))
-                   .pipe(browserSync.reload({
-                       stream: true
-                   }));
+        .pipe(sourcemaps.write(".", {
+            sourceRoot: srcRoot,
+            includeContent: false
+        }))
+        .pipe(frep(patterns))
+        .pipe(gulp.dest("."))
+        .pipe(connect.reload());
 });
 
 
@@ -100,24 +98,21 @@ gulp.task("scripts-dist", ["scripts-debug"], function() {
     "use strict";
 
     return gulp.src(paths.distJSList)
-               .pipe(filelog("concat-dist"))
-               .pipe(concat("main.js"))
-               // FIXME: Removed until gulp-uglifyjs supports harmony
-               // .pipe(rename({
-               //     suffix: ".min"
-               // }))
-               // .pipe(uglify())
-               .pipe(gulp.dest(paths.distJS));
+        .pipe(filelog("concat-dist"))
+        .pipe(concat("main.js"))
+        // FIXME: Removed until gulp-uglifyjs supports harmony
+        // .pipe(rename({
+        //     suffix: ".min"
+        // }))
+        // .pipe(uglify())
+        .pipe(gulp.dest(paths.distJS));
 });
 
 
-gulp.task("browser-sync", function() {
-    "use strict";
-
-    browserSync({
-        proxy: proxy,
-        logConnections: true,
-        open: false
+gulp.task("connect", function() {
+    connect.server({
+        root: "",
+        livereload: true
     });
 });
 
@@ -125,7 +120,7 @@ gulp.task("browser-sync", function() {
 gulp.task("watch", function() {
     "use strict";
 
-    runSequence("clean", ["styles", "scripts-debug"], "browser-sync");
+    runSequence("clean", ["styles", "scripts-debug"], "connect");
 
     gulp.watch(paths.srcSCSS, ["styles"]);
     gulp.watch(paths.srcTS, ["scripts-debug"]);
@@ -136,7 +131,7 @@ gulp.task("clean", function() {
     "use strict";
 
     return gulp.src(paths.dist)
-               .pipe(vinylPaths(del));
+        .pipe(vinylPaths(del));
 });
 
 
