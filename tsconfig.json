@@ -10,19 +10,18 @@
         "noImplicitAny": false,
         "outFile": "dist/js/main.js"
     },
-    "filesGlob": [
-        "./**/*.ts",
-        "!./node_modules/**/*.ts"
-    ],
     "files": [
-        "src/ts/data/Enums.class.ts",
-        "src/ts/data/Settings.class.ts",
+        "typings/index.d.ts",
+        "src/ts/td/ColladaLoader.d.ts",
+        "src/ts/data/*.ts",
         "src/ts/MyScene.class.ts",
         "src/ts/App.class.ts",
-        "src/ts/main.ts",
-        "typings/globals/three/index.d.ts",
-        "typings/globals/three-vrcontrols/index.d.ts",
-        "typings/globals/three-vreffect/index.d.ts",
-        "typings/globals/webvr-api/index.d.ts"
+        "src/ts/main.ts"
+    ],
+    "exclude": [
+        "assets",
+        "components",
+        "dist",
+        "node_modules"
     ]
 }

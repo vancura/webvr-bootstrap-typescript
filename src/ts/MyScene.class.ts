@@ -1,6 +1,3 @@
-///<reference path="./ColladaLoader.d.ts"/>
-
-
 class MyScene extends THREE.Scene {
 
 
@@ -88,16 +85,20 @@ class MyScene extends THREE.Scene {
 
             y.magFilter = THREE.NearestFilter;
             y.minFilter = THREE.NearestFilter;
-        }, this.onProgress);
+        }, this.onModelProgress);
     }
 
 
-    private onProgress = (xhr: any): void => {
+    // noinspection JSMethodCanBeStatic
+    /**
+     * Model progress event listener.
+     * @param xhr XHR
+     */
+    private onModelProgress(xhr: any): void {
         if (xhr.lengthComputable) {
-            let percentComplete: number = xhr.loaded / xhr.total * 100;
-            console.log(percentComplete + "% downloaded");
+            console.log(`${Math.round(xhr.loaded / xhr.total * 100)}% downloaded`);
         }
-    };
+    }
 
 
 }

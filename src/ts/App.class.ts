@@ -34,6 +34,8 @@ class App {
      * Initialization.
      */
     init(): void {
+        console.log("TypeScript WebVR Bootstrap version %VERSION%");
+
         // Setup three.js WebGL renderer. Note: Antialiasing is a big performance hit
         // Only enable it if you actually need to
         this.renderer = new THREE.WebGLRenderer({ antialias: false });
@@ -69,24 +71,16 @@ class App {
         // Resize the WebGL canvas when we resize and also when we change modes
         window.addEventListener("resize", this.onResize);
         window.addEventListener("vrdisplaypresentchange", this.onVRDisplayPresentChange);
-        document.addEventListener("touchmove", (e) => {
-            e.preventDefault();
-        });
+        document.addEventListener("touchmove", (e) => e.preventDefault());
 
         // Button click handlers
-        document.querySelector("button#fullscreen").addEventListener("click", () => {
-            this.onEnterFullscreen(this.renderer.domElement);
-        });
+        document.querySelector("button#fullscreen").addEventListener("click", () => this.onEnterFullscreen(this.renderer.domElement));
 
-        document.querySelector("button#vr").addEventListener("click", () => {
-            this.vrDisplay.requestPresent([{
-                source: this.renderer.domElement,
-            }]);
-        });
+        document.querySelector("button#vr").addEventListener("click", () => this.vrDisplay.requestPresent([{
+            source: this.renderer.domElement,
+        }]));
 
-        document.querySelector("button#reset").addEventListener("click", () => {
-            this.vrDisplay.resetPose();
-        });
+        document.querySelector("button#reset").addEventListener("click", () => this.vrDisplay.resetPose());
 
         // Kick off animation loop
         requestAnimationFrame(this.animate);
